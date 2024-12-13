@@ -1,0 +1,6 @@
+@FactApp_HostAddress = http://localhost:5276
+
+GET {{FactApp_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
