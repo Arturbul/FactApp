@@ -1,4 +1,6 @@
 ﻿using FactApp.Domain.Interfaces.Repositories;
+using FactApp.Domain.Models;
+using Newtonsoft.Json;
 
 namespace FactApp.Infrastructure.Repositories
 {
@@ -12,11 +14,13 @@ namespace FactApp.Infrastructure.Repositories
             _httpClient.Timeout = TimeSpan.FromSeconds(30);
         }
 
-        public async void GetNewFact()
+        public async Task<Fact?> GetNewFact()
         {
             try
             {
                 var json = await _httpClient.GetStringAsync("https://catfact.ninja/fact");
+                var result = JsonConvert.DeserializeObject<Fact>(json);
+                return result;
             }
             catch (InvalidOperationException)
             {

@@ -1,4 +1,5 @@
 ﻿using FactApp.Application.Interfaces;
+using FactApp.Application.Mappers;
 using FactApp.Application.Services;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -13,7 +14,7 @@ namespace FactApp.Application.Configurations
         }
         private static void MapperProfilesRegister(IServiceCollection services)
         {
-            //services.AddAutoMapper();
+            services.AddAutoMapper(typeof(FactServiceProfile));
         }
 
         public static void Register(IServiceCollection services)

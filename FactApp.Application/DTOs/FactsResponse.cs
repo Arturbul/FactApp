@@ -2,5 +2,6 @@
 {
     public class FactsResponse
     {
+        public IList<string>? Facts { get; set; }
     }
 }

@@ -1,7 +1,9 @@
-﻿namespace FactApp.Domain.Interfaces.Repositories
+﻿using FactApp.Domain.Models;
+
+namespace FactApp.Domain.Interfaces.Repositories
 {
     public interface IFactRepository
     {
-        void GetNewFact();
+        Task<Fact?> GetNewFact();
     }
 }
