@@ -61,15 +61,25 @@ namespace FactApp.Application.Services
         }
 
         /// <summary>
-        /// Fetches a new fact from the repository and maps it to a string.
+        /// Fetches a new fact from the repository, validates its content length, 
+        /// and maps it to a string representation for saving or further processing.
         /// </summary>
-        /// <returns>The content of the fetched fact as a string, or null if fetching failed.</returns>
+        /// <returns>
+        /// A string representing the content of the fetched fact if successful; 
+        /// otherwise, <c>null</c> if the fetch operation fails. 
+        /// Throws an <see cref="InvalidDataException"/> if the content length does not match the expected length.
+        /// </returns>
         private async Task<string?> FetchNewFactContent()
         {
             var newFact = await _factRepository.GetNewFact();
             if (newFact == null)
             {
                 return null;
+            }
+
+            if (newFact.FactContent.Length != newFact.Length)
+            {
+                throw new InvalidDataException($"Fact content length ({newFact.FactContent.Length}) does not match the expected length ({newFact.Length}).");
             }
 
             var factToSave = _mapper.Map<NewFactCommand>(newFact);

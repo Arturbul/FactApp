@@ -49,6 +49,10 @@ namespace FactApp.Controllers
             {
                 return Conflict(e.Message);
             }
+            catch (InvalidDataException e)
+            {
+                return StatusCode(500, e.Message);
+            }
             catch (Exception e)
             {
                 return BadRequest(e.Message);
