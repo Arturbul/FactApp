@@ -58,5 +58,6 @@
         /// <exception cref="NullReferenceException">Thrown when the specified file does not exist.</exception>
         /// <exception cref="InvalidOperationException">Thrown when an error occurs while modifying the file.</exception>
         Task<int> DeleteLines(string fileName, int? count);
+        Task SaveToFileAsync(string fileName, IEnumerable<string> content);
     }
 }

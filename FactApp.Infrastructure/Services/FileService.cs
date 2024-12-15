@@ -33,6 +33,19 @@ namespace FactApp.Infrastructure.Services
             }
         }
 
+        public async Task SaveToFileAsync(string fileName, IEnumerable<string> content)
+        {
+            try
+            {
+                var filePath = GetFilePath(fileName);
+                await File.AppendAllLinesAsync(filePath, content);
+            }
+            catch (Exception)
+            {
+                throw new InvalidOperationException("Error occured while saving to file.");
+            }
+        }
+
         public async Task<IList<string>> GetFullFileContent(string fileName)
         {
             if (!IsFileExists(fileName))
