@@ -17,11 +17,11 @@ namespace FactApp.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetFacts(string fileName = "facts.txt")
+        public async Task<IActionResult> GetFacts(string fileName = "facts.txt", int? top = 0)
         {
             try
             {
-                var result = await _factService.GetFacts(fileName);
+                var result = await _factService.GetFacts(fileName, top);
                 Response.Headers.Location = _fileService.GetFilePath(fileName);
                 return Ok(result);
             }
@@ -68,7 +68,7 @@ namespace FactApp.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> DeleteFact(int count, string fileName = "facts.txt")
+        public async Task<IActionResult> DeleteFact(int? count, string fileName = "facts.txt")
         {
             try
             {

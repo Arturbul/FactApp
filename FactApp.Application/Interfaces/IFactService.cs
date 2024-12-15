@@ -4,8 +4,8 @@ namespace FactApp.Application.Interfaces
 {
     public interface IFactService
     {
-        Task<int> DeleteFacts(string fileName, int count);
-        Task<FactsResponse> GetFacts(string fileName);
+        Task<int> DeleteFacts(string fileName, int? count);
+        Task<FactsResponse> GetFacts(string fileName, int? top);
         Task<FactResponse?> SaveNewFact(string fileName);
     }
 }
