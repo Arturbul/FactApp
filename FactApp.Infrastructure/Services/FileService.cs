@@ -147,6 +147,5 @@ namespace FactApp.Infrastructure.Services
                 throw new InvalidOperationException("Error occurred while counting lines in the file.");
             }
         }
-
     }
 }

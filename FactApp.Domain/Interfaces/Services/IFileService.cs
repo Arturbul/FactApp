@@ -29,6 +29,15 @@
         Task SaveToFileAsync(string fileName, string content, bool toNewLine = true);
 
         /// <summary>
+        /// Saves a collection of content lines to the specified file, each as a new line in the file.
+        /// </summary>
+        /// <param name="fileName">The name of the file to save to.</param>
+        /// <param name="content">A collection of strings to be written to the file, each on a new line.</param>
+        /// <returns>A task representing the asynchronous operation.</returns>
+        /// <exception cref="InvalidOperationException">Thrown when an error occurs while saving to the file.</exception>
+        Task SaveToFileAsync(string fileName, IEnumerable<string> content);
+
+        /// <summary>
         /// Retrieves a specified number of lines from the beginning of the specified file.
         /// If the count parameter is null or zero, retrieves the entire file content.
         /// </summary>
@@ -58,6 +67,5 @@
         /// <exception cref="NullReferenceException">Thrown when the specified file does not exist.</exception>
         /// <exception cref="InvalidOperationException">Thrown when an error occurs while modifying the file.</exception>
         Task<int> DeleteLines(string fileName, int? count);
-        Task SaveToFileAsync(string fileName, IEnumerable<string> content);
     }
 }

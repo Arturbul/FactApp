@@ -46,18 +46,6 @@ namespace FactApp.Application.Services
             return response;
         }
 
-        private async Task<string?> FetchNewFactContent()
-        {
-            var newFact = await _factRepository.GetNewFact();
-            if (newFact == null)
-            {
-                return null;
-            }
-
-            var factToSave = _mapper.Map<NewFactCommand>(newFact);
-            return factToSave.ToString();
-        }
-
         public async Task<FactsResponse> GetFacts(string fileName, int? top)
         {
             var fileLines = await _fileService.GetFileContent(fileName, top);
@@ -70,6 +58,22 @@ namespace FactApp.Application.Services
         {
             var deleted = await _fileService.DeleteLines(fileName, count);
             return deleted;
+        }
+
+        /// <summary>
+        /// Fetches a new fact from the repository and maps it to a string.
+        /// </summary>
+        /// <returns>The content of the fetched fact as a string, or null if fetching failed.</returns>
+        private async Task<string?> FetchNewFactContent()
+        {
+            var newFact = await _factRepository.GetNewFact();
+            if (newFact == null)
+            {
+                return null;
+            }
+
+            var factToSave = _mapper.Map<NewFactCommand>(newFact);
+            return factToSave.ToString();
         }
     }
 }
