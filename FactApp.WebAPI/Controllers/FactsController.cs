@@ -1,4 +1,5 @@
 using FactApp.Application.Interfaces;
+using FactApp.Domain.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FactApp.Controllers
@@ -8,18 +9,21 @@ namespace FactApp.Controllers
     public class FactsController : ControllerBase
     {
         private readonly IFactService _factService;
-
-        public FactsController(IFactService factService)
+        private readonly IFileService _fileService;
+        public FactsController(IFactService factService, IFileService fileService)
         {
             _factService = factService;
+            _fileService = fileService;
         }
 
         [HttpGet]
-        public IActionResult GetFacts()
+        public async Task<IActionResult> GetFacts(string fileName = "facts.txt")
         {
             try
             {
-                return Ok();
+                var result = await _factService.GetFacts(fileName);
+                Response.Headers.Location = _fileService.GetFilePath(fileName);
+                return Ok(result);
             }
             catch (NullReferenceException e)
             {
@@ -35,13 +39,19 @@ namespace FactApp.Controllers
             }
         }
 
-        [HttpPost]
-        public IActionResult SaveNewFact()
+        [HttpPut]
+        public async Task<IActionResult> SaveNewFact(string fileName = "facts.txt")
         {
             try
             {
-                _factService.SaveNewFact();
-                return Ok();
+                var result = await _factService.SaveNewFact(fileName);
+                if (result == null)
+                {
+                    return Problem("No fact to save.");
+                }
+                var filePath = _fileService.GetFilePath(fileName);
+
+                return Created(filePath, result);
             }
             catch (NullReferenceException e)
             {
@@ -58,11 +68,13 @@ namespace FactApp.Controllers
         }
 
         [HttpDelete]
-        public IActionResult DeleteFact()
+        public async Task<IActionResult> DeleteFact(int count, string fileName = "facts.txt")
         {
             try
             {
-                return Ok();
+                var deleted = await _factService.DeleteFacts(fileName, count);
+                Response.Headers.Location = _fileService.GetFilePath(fileName);
+                return Ok($"Deleted {deleted} facts.");
             }
             catch (NullReferenceException e)
             {

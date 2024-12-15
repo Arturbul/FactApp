@@ -11,7 +11,7 @@ namespace FactApp.Infrastructure.Configurations
         private static void RepositoriesRegister(IServiceCollection services)
         {
             services.AddHttpClient<IFactRepository, FactRepository>();
-            services.AddSingleton<IFileService>(prov => new FileService("Saved"));
+            services.AddSingleton<IFileService>(prov => new FileService(Path.Combine(Directory.GetCurrentDirectory(), "Saved")));
         }
 
         public static void Register(IServiceCollection services)

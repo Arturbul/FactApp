@@ -19,7 +19,7 @@ namespace FactApp.Application.Services
             _fileService = fileService;
         }
 
-        public async Task<FactResponse?> SaveNewFact()
+        public async Task<FactResponse?> SaveNewFact(string fileName)
         {
             var newFact = await _factRepository.GetNewFact();
             if (newFact == null)
@@ -28,10 +28,23 @@ namespace FactApp.Application.Services
             }
 
             var factToSave = _mapper.Map<NewFactCommand>(newFact);
-            await _fileService.SaveToFileAsync("facts.txt", factToSave.ToString());
+            await _fileService.SaveToFileAsync(fileName, factToSave.ToString());
 
             var response = _mapper.Map<FactResponse>(newFact);
             return response;
+        }
+
+        public async Task<FactsResponse> GetFacts(string fileName)
+        {
+            var fileLines = await _fileService.GetFileContent(fileName);
+            var result = _mapper.Map<FactsResponse>(fileLines);
+            return result;
+        }
+
+        public async Task<int> DeleteFacts(string fileName, int count)
+        {
+            var deleted = await _fileService.DeleteLines(fileName, count);
+            return deleted;
         }
     }
 }

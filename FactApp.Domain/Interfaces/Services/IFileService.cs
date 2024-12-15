@@ -1,8 +1,10 @@
-﻿
-namespace FactApp.Domain.Interfaces.Services
+﻿namespace FactApp.Domain.Interfaces.Services
 {
     public interface IFileService
     {
-        Task SaveToFileAsync(string fileName, string content);
+        Task<int> DeleteLines(string fileName, int count);
+        Task<IList<string>> GetFileContent(string fileName);
+        string GetFilePath(string fileName);
+        Task SaveToFileAsync(string fileName, string content, bool toNewLine = true);
     }
 }

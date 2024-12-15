@@ -13,6 +13,9 @@ namespace FactApp.Application.Mappers
                 .ForMember(dest => dest.Fact, opt => opt.MapFrom(src => src.FactContent));
 
             CreateMap<Fact, NewFactCommand>();
+
+            CreateMap<IList<string>?, FactsResponse>()
+                .ForMember(dest => dest.Facts, opt => opt.MapFrom(src => src));
         }
     }
 }
