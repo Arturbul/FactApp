@@ -2,9 +2,7 @@
 
 ## Overview
 
-**FactApp** is a simple web application built with .NET 8.0 that provides an API for managing "facts." The application allows users to perform CRUD (Create, Read, Update, Delete) operations on facts, which are stored in a file. It leverages industry best practices like **Dependency Injection**, **Clean Code principles**, **Domain-Driven Design (DDD)**, and **AutoMapper** for object-to-object mapping.
-
-The application is organized using DDD principles and is composed of several layers, including the Domain, Application, Infrastructure, and Web API. The API exposes endpoints for interacting with facts, and it uses Swagger for API documentation.
+**FactApp** is a simple web application built with .NET 8.0 that provides an API for managing "facts." The application allows users to perform CRUD (Create, Read, Update, Delete) operations on facts, which are stored in a file. The API exposes endpoints for interacting with facts, and it uses Swagger for API documentation.
 
 ## Features
 
@@ -88,40 +86,3 @@ Deletes a specified number of facts from the file.
 - **404 NotFound**: If the file does not exist.
 - **409 Conflict**: If there is a conflict during deletion.
 - **500 Internal Server Error**: If an unexpected error occurs during the deletion process.
-
-## Design Principles
-
-### Clean Code
-
-This project follows **Clean Code** principles, ensuring that the code is readable, maintainable, and easy to refactor. The project emphasizes:
-
-- Meaningful variable, method, and class names.
-- Proper code organization with clear separation of concerns.
-- Avoidance of complex logic and deep nesting.
-- Clear documentation, including XML comments and method summaries.
-
-### Dependency Injection (DI)
-
-**Dependency Injection** is used to manage dependencies within the application. This allows for:
-
-- Loose coupling between components, making the application easier to test and extend.
-- Centralized configuration of dependencies through the DI container, ensuring that the application’s components are properly configured and managed.
-
-### Domain-Driven Design (DDD)
-
-The project is structured around the core business logic, applying **Domain-Driven Design (DDD)** principles:
-
-- The **Domain** layer contains the core entities and logic, such as the `Fact` entity and its validation rules.
-- The **Application** layer manages the interaction between the Domain and the external layers (such as the web API and repositories).
-- The **Infrastructure** layer handles the technical details of data persistence and external dependencies, such as file management.
-
-### AutoMapper
-
-**AutoMapper** is used to map between different object types, ensuring that:
-
-- The logic for transforming data between layers is separated and encapsulated.
-- It simplifies mapping between domain models and other representations (e.g., DTOs), reducing boilerplate code.
-
-## Conclusion
-
-**FactApp** is designed to manage and manipulate facts through a simple REST API. It is built with clean, maintainable code, following modern software design principles like **Domain-Driven Design**, **Dependency Injection**, and **AutoMapper** to ensure scalability, flexibility, and ease of testing.
