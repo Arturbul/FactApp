@@ -6,6 +6,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace FactApp.Infrastructure.Configurations
 {
+    /// <summary>
+    /// Class responsible for registering dependencies in the dependency injection container.
+    /// </summary>
     public class Dependencies
     {
         private static void RepositoriesRegister(IServiceCollection services)
@@ -14,6 +17,10 @@ namespace FactApp.Infrastructure.Configurations
             services.AddSingleton<IFileService>(prov => new FileService(Path.Combine(Directory.GetCurrentDirectory(), "Saved")));
         }
 
+        /// <summary>
+        /// Registers all necessary dependencies in the service collection.
+        /// </summary>
+        /// <param name="services">The service collection where the dependencies will be registered.</param>
         public static void Register(IServiceCollection services)
         {
             RepositoriesRegister(services);
