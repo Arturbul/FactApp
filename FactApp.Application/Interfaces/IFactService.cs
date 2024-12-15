@@ -1,7 +1,9 @@
-﻿namespace FactApp.Application.Interfaces
+﻿using FactApp.Application.DTOs;
+
+namespace FactApp.Application.Interfaces
 {
     public interface IFactService
     {
-        void SaveNewFact();
+        Task<FactResponse?> SaveNewFact();
     }
 }

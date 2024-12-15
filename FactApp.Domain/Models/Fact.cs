@@ -1,10 +1,10 @@
-﻿using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace FactApp.Domain.Models
 {
     public class Fact
     {
-        [JsonPropertyName("fact")]
+        [JsonProperty("fact")]
         public string FactContent { get; set; } = null!;
         public int Length { get; set; }
     }
