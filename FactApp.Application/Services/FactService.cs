@@ -34,14 +34,15 @@ namespace FactApp.Application.Services
             return response;
         }
 
-        public async Task<FactsResponse> GetFacts(string fileName)
+        public async Task<FactsResponse> GetFacts(string fileName, int? top)
         {
-            var fileLines = await _fileService.GetFileContent(fileName);
+            var fileLines = await _fileService.GetFileContent(fileName, top);
+
             var result = _mapper.Map<FactsResponse>(fileLines);
             return result;
         }
 
-        public async Task<int> DeleteFacts(string fileName, int count)
+        public async Task<int> DeleteFacts(string fileName, int? count)
         {
             var deleted = await _fileService.DeleteLines(fileName, count);
             return deleted;
