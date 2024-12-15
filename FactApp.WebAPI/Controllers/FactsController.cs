@@ -39,19 +39,21 @@ namespace FactApp.Controllers
             }
         }
 
-        [HttpPut]
-        public async Task<IActionResult> SaveNewFact(string fileName = "facts.txt")
+        [HttpPost]
+        public async Task<IActionResult> SaveNewFact(string fileName = "facts.txt", int count = 1)
         {
             try
             {
-                var result = await _factService.SaveNewFact(fileName);
-                if (result == null)
-                {
-                    return Problem("No fact to save.");
-                }
                 var filePath = _fileService.GetFilePath(fileName);
 
-                return Created(filePath, result);
+                if (count == 1)
+                {
+                    return await SaveSingleFact(fileName, filePath);
+                }
+                else
+                {
+                    return await SaveMultipleFacts(fileName, count, filePath);
+                }
             }
             catch (NullReferenceException e)
             {
@@ -66,6 +68,31 @@ namespace FactApp.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+        private async Task<IActionResult> SaveSingleFact(string fileName, string filePath)
+        {
+            var result = await _factService.SaveNewFact(fileName);
+
+            if (result == null)
+            {
+                return Problem("No fact to save.");
+            }
+
+            return Created(filePath, result);
+        }
+
+        private async Task<IActionResult> SaveMultipleFacts(string fileName, int count, string filePath)
+        {
+            var facts = await _factService.SaveNewFacts(fileName, count);
+
+            if (facts == null || facts.Facts == null || !facts.Facts.Any())
+            {
+                return Problem("No facts to save.");
+            }
+
+            return Created(filePath, facts);
+        }
+
 
         [HttpDelete]
         public async Task<IActionResult> DeleteFact(int? count, string fileName = "facts.txt")

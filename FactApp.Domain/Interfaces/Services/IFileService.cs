@@ -8,5 +8,6 @@
         Task<IList<string>> GetFileContent(string fileName, int? count);
         Task<int> GetLineCount(string fileName);
         Task<int> DeleteLines(string fileName, int? count);
+        Task SaveToFileAsync(string fileName, IEnumerable<string> content);
     }
 }

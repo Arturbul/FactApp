@@ -21,6 +21,33 @@ namespace FactApp.Application.Services
 
         public async Task<FactResponse?> SaveNewFact(string fileName)
         {
+            var newFact = await FetchNewFactContent();
+
+            var response = _mapper.Map<FactResponse?>(newFact);
+            return response;
+        }
+
+        public async Task<FactsResponse?> SaveNewFacts(string fileName, int count = 1)
+        {
+            var newFacts = new List<string>();
+            for (int i = 0; i < count; i++)
+            {
+                var factToSave = await FetchNewFactContent();
+                if (factToSave == null)
+                {
+                    break;
+                }
+                newFacts.Add(factToSave);
+            }
+
+            await _fileService.SaveToFileAsync(fileName, newFacts);
+
+            var response = _mapper.Map<FactsResponse>(newFacts);
+            return response;
+        }
+
+        private async Task<string?> FetchNewFactContent()
+        {
             var newFact = await _factRepository.GetNewFact();
             if (newFact == null)
             {
@@ -28,10 +55,7 @@ namespace FactApp.Application.Services
             }
 
             var factToSave = _mapper.Map<NewFactCommand>(newFact);
-            await _fileService.SaveToFileAsync(fileName, factToSave.ToString());
-
-            var response = _mapper.Map<FactResponse>(newFact);
-            return response;
+            return factToSave.ToString();
         }
 
         public async Task<FactsResponse> GetFacts(string fileName, int? top)
